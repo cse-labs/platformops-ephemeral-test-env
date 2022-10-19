@@ -1,0 +1,72 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  name: manager-role
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
+  - patch
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - helm.crossplane.io
+  resources:
+  - releases
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - helm.toolkit.fluxcd.io
+  resources:
+  - helmreleases
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - prcontroller.controllers.ephemeralenv.io
+  resources:
+  - FluxPullRequestGenerators
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - prcontroller.controllers.ephemeralenv.io
+  resources:
+  - FluxPullRequestGenerators/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - prcontroller.controllers.ephemeralenv.io
+  resources:
+  - FluxPullRequestGenerators/status
+  verbs:
+  - get
+  - patch
+  - update

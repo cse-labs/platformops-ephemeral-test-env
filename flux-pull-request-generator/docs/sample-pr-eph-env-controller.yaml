@@ -1,0 +1,19 @@
+apiVersion: prcontroller.controllers.ephemeralenv.io/v1alpha1
+kind: FluxPullRequestGenerator
+metadata:
+  name: pr-eph-env-ctrlr-2
+spec:
+  githubPRRepository:
+    user: 
+    repo: ephemeral-poc1-app
+    tokenSecretRef: 
+      name: tokensecret
+      namespace: default
+      key: token
+  envCreationHelmRepo:
+    fluxSourceRepoName: infra-repo-public
+    helmChartPath: ephemeral-env
+    chartVersion: 0.1.0
+    destinationNamespace: pr-helm-releases-2
+  interval: "60s"
+

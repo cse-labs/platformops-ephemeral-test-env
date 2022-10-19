@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: sampleapps
+  namespace: argocd
+spec:
+  generators:
+  - pullRequest:
+      github:
+          owner: 
+          repo: platformops-ephemeral-test-env
+      requeueAfterSeconds: 120
+  template:
+    metadata:
+      name: 'app-{{branch}}-{{number}}'
+    spec:
+      source:
+        repoURL: 'https://github.com/cse-labs/platformops-ephemeral-test-env.git'
+        # targetRevision: '{{head_sha}}'
+        path: environment-infra-helm-repo/ephemeral-env
+        helm:
+          parameters:
+          - name: "prSHA"
+            value: "{{head_sha}}"
+          - name: "prNumber"
+            value: "{{number}}"
+      project: default
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: 'appset-ephem-ns'
+      syncPolicy:
+          automated:
+              allowEmpty: true
+              prune: true
+              selfHeal: true

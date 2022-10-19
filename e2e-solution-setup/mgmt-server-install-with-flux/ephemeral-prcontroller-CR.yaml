@@ -1,0 +1,19 @@
+apiVersion: prcontroller.controllers.ephemeralenv.io/v1alpha1
+kind: FluxPullRequestGenerator
+metadata:
+  name: flux-pr-gen-sample
+spec:
+  githubPRRepository:
+    user: manisbindra
+    repo: platformops-ephemeral-test-env
+    tokenSecretRef: 
+      name: tokensecret
+      namespace: default
+      key: token
+  envCreationHelmRepo:
+    fluxSourceRepoName: infra-repo-public
+    helmChartPath: environment-infra-helm-repo/ephemeral-env
+    chartVersion: 0.1.0
+    destinationNamespace: pr-helm-releases
+  interval: "60s"
+  envHealthCheckURLTemplate: "http://ephenvtestpr<<PR_NUMBER>>.eastus.cloudapp.azure.com"

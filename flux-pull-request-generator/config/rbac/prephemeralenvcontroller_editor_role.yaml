@@ -1,0 +1,24 @@
+# permissions for end users to edit FluxPullRequestGenerators.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: FluxPullRequestGenerator-editor-role
+rules:
+- apiGroups:
+  - prcontroller.ephemeralenv.io.prcontroller.ephemeralenv.io
+  resources:
+  - FluxPullRequestGenerators
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - prcontroller.ephemeralenv.io.prcontroller.ephemeralenv.io
+  resources:
+  - FluxPullRequestGenerators/status
+  verbs:
+  - get

@@ -1,0 +1,36 @@
+apiVersion: helm.crossplane.io/v1beta1
+kind: Release
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
+  name: apphelmpr{{ .Values.prNumber }}
+spec:
+# rollbackLimit: 3
+  forProvider:
+    chart:
+      name: helm/app
+      repository: "oci://ghcr.io/manisbindra"
+      version: 0.0.{{ .Values.prNumber }}
+      pullSecretRef:
+        name: helmoci
+        namespace: crossplane-system
+      url: "oci://ghcr.io/manisbindra/helm/app:0.0.{{ .Values.prNumber }}"
+    namespace: app
+    values:
+      prNumber: {{ .Values.prNumber }}
+      service:
+        type: LoadBalancer
+      image:
+        tag: {{ .Values.prSHA}}
+      db:
+        SPRING_DATASOURCE_URL: jdbc:postgresql://pgpr{{ .Values.prNumber }}.postgres.database.azure.com:5432/postgres
+        SPRING_DATASOURCE_USERNAME: psqladminun@pgpr{{ .Values.prNumber }}
+    set:
+    - name: db.SPRING_DATASOURCE_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          key: password
+          name: psql-password 
+          namespace: crossplane-system
+  providerConfigRef:
+    name: helmproviderpr{{ .Values.prNumber }}

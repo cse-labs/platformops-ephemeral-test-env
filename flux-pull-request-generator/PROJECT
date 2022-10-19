@@ -1,0 +1,16 @@
+domain: prcontroller.ephemeralenv.io
+layout:
+- go.kubebuilder.io/v4-alpha
+projectName: flux-pull-request-generator
+repo: github.com/cse-labs/platformops-ephemeral-test-env
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: prcontroller.ephemeralenv.io
+  group: prcontroller.ephemeralenv.io
+  kind: FluxPullRequestGenerator
+  path: github.com/cse-labs/platformops-ephemeral-test-env/api/v1alpha1
+  version: v1alpha1
+version: "3"
