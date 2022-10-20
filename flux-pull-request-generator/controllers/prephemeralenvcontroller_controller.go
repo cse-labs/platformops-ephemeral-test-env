@@ -96,9 +96,9 @@ func getPRDetailsForHelmRelease(ctx context.Context, helmRelease fluxhelmrelease
 	return prDetails, nil
 }
 
-//+kubebuilder:rbac:groups=prcontroller.controllers.ephemeralenv.io,resources=FluxPullRequestGenerators,verbs=get;list;watch;create;update;patch;delete
-//+kubebuilder:rbac:groups=prcontroller.controllers.ephemeralenv.io,resources=FluxPullRequestGenerators/status,verbs=get;update;patch
-//+kubebuilder:rbac:groups=prcontroller.controllers.ephemeralenv.io,resources=FluxPullRequestGenerators/finalizers,verbs=update
+//+kubebuilder:rbac:groups=prcontroller.controllers.ephemeralenv.io,resources=fluxpullrequestgenerators,verbs=get;list;watch;create;update;patch;delete
+//+kubebuilder:rbac:groups=prcontroller.controllers.ephemeralenv.io,resources=fluxpullrequestgenerators/status,verbs=get;update;patch
+//+kubebuilder:rbac:groups=prcontroller.controllers.ephemeralenv.io,resources=fluxpullrequestgenerators/finalizers,verbs=update
 //+kubebuilder:rbac:groups=helm.toolkit.fluxcd.io,resources=helmreleases,verbs=get;list;watch;create;update;patch;delete
 //+kubebuilder:rbac:groups=helm.crossplane.io,resources=releases,verbs=get;list;watch;create;update;patch;delete
 //+kubebuilder:rbac:groups="",resources=secrets,verbs=get;list;watch

@@ -3,7 +3,7 @@ kind: Namespace
 metadata:
   labels:
     control-plane: controller-manager
-  name: pr-ephemeral-env-controller-system
+  name: flux-pull-request-generator-system
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -11,14 +11,14 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
-  name: FluxPullRequestGenerators.prcontroller.controllers.ephemeralenv.io
+  name: fluxpullrequestgenerators.prcontroller.controllers.ephemeralenv.io
 spec:
   group: prcontroller.controllers.ephemeralenv.io
   names:
     kind: FluxPullRequestGenerator
     listKind: FluxPullRequestGeneratorList
-    plural: FluxPullRequestGenerators
-    singular: FluxPullRequestGenerator
+    plural: fluxpullrequestgenerators
+    singular: fluxpullrequestgenerator
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
@@ -203,14 +203,14 @@ spec:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: pr-ephemeral-env-controller-controller-manager
-  namespace: pr-ephemeral-env-controller-system
+  name: flux-pull-request-generator-controller-manager
+  namespace: flux-pull-request-generator-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: pr-ephemeral-env-controller-leader-election-role
-  namespace: pr-ephemeral-env-controller-system
+  name: flux-pull-request-generator-leader-election-role
+  namespace: flux-pull-request-generator-system
 rules:
 - apiGroups:
   - ""
@@ -248,7 +248,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   creationTimestamp: null
-  name: pr-ephemeral-env-controller-manager-role
+  name: flux-pull-request-generator-manager-role
 rules:
 - apiGroups:
   - ""
@@ -292,7 +292,7 @@ rules:
 - apiGroups:
   - prcontroller.controllers.ephemeralenv.io
   resources:
-  - FluxPullRequestGenerators
+  - fluxpullrequestgenerators
   verbs:
   - create
   - delete
@@ -304,13 +304,13 @@ rules:
 - apiGroups:
   - prcontroller.controllers.ephemeralenv.io
   resources:
-  - FluxPullRequestGenerators/finalizers
+  - fluxpullrequestgenerators/finalizers
   verbs:
   - update
 - apiGroups:
   - prcontroller.controllers.ephemeralenv.io
   resources:
-  - FluxPullRequestGenerators/status
+  - fluxpullrequestgenerators/status
   verbs:
   - get
   - patch
@@ -319,7 +319,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: pr-ephemeral-env-controller-metrics-reader
+  name: flux-pull-request-generator-metrics-reader
 rules:
 - nonResourceURLs:
   - /metrics
@@ -329,7 +329,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: pr-ephemeral-env-controller-proxy-role
+  name: flux-pull-request-generator-proxy-role
 rules:
 - apiGroups:
   - authentication.k8s.io
@@ -347,42 +347,42 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: pr-ephemeral-env-controller-leader-election-rolebinding
-  namespace: pr-ephemeral-env-controller-system
+  name: flux-pull-request-generator-leader-election-rolebinding
+  namespace: flux-pull-request-generator-system
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: pr-ephemeral-env-controller-leader-election-role
+  name: flux-pull-request-generator-leader-election-role
 subjects:
 - kind: ServiceAccount
-  name: pr-ephemeral-env-controller-controller-manager
-  namespace: pr-ephemeral-env-controller-system
+  name: flux-pull-request-generator-controller-manager
+  namespace: flux-pull-request-generator-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: pr-ephemeral-env-controller-manager-rolebinding
+  name: flux-pull-request-generator-manager-rolebinding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: pr-ephemeral-env-controller-manager-role
+  name: flux-pull-request-generator-manager-role
 subjects:
 - kind: ServiceAccount
-  name: pr-ephemeral-env-controller-controller-manager
-  namespace: pr-ephemeral-env-controller-system
+  name: flux-pull-request-generator-controller-manager
+  namespace: flux-pull-request-generator-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: pr-ephemeral-env-controller-proxy-rolebinding
+  name: flux-pull-request-generator-proxy-rolebinding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: pr-ephemeral-env-controller-proxy-role
+  name: flux-pull-request-generator-proxy-role
 subjects:
 - kind: ServiceAccount
-  name: pr-ephemeral-env-controller-controller-manager
-  namespace: pr-ephemeral-env-controller-system
+  name: flux-pull-request-generator-controller-manager
+  namespace: flux-pull-request-generator-system
 ---
 apiVersion: v1
 data:
@@ -410,16 +410,16 @@ data:
     # leaderElectionReleaseOnCancel: true
 kind: ConfigMap
 metadata:
-  name: pr-ephemeral-env-controller-manager-config
-  namespace: pr-ephemeral-env-controller-system
+  name: flux-pull-request-generator-manager-config
+  namespace: flux-pull-request-generator-system
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
     control-plane: controller-manager
-  name: pr-ephemeral-env-controller-controller-manager-metrics-service
-  namespace: pr-ephemeral-env-controller-system
+  name: flux-pull-request-generator-controller-manager-metrics-service
+  namespace: flux-pull-request-generator-system
 spec:
   ports:
   - name: https
@@ -434,8 +434,8 @@ kind: Deployment
 metadata:
   labels:
     control-plane: controller-manager
-  name: pr-ephemeral-env-controller-controller-manager
-  namespace: pr-ephemeral-env-controller-system
+  name: flux-pull-request-generator-controller-manager
+  namespace: flux-pull-request-generator-system
 spec:
   replicas: 1
   selector:
@@ -478,7 +478,7 @@ spec:
         - --leader-elect
         command:
         - /manager
-        image: ghcr.io/manisbindra/pr-ephemeral-env-controller:0.2.0
+        image: ghcr.io/cse-labs/platformops-ephemeral-test-env/flux-pull-request-generator:0.2.0
         livenessProbe:
           httpGet:
             path: /healthz
@@ -506,5 +506,5 @@ spec:
             - ALL
       securityContext:
         runAsNonRoot: true
-      serviceAccountName: pr-ephemeral-env-controller-controller-manager
+      serviceAccountName: flux-pull-request-generator-controller-manager
       terminationGracePeriodSeconds: 10

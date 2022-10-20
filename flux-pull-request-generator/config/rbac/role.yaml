@@ -47,7 +47,7 @@ rules:
 - apiGroups:
   - prcontroller.controllers.ephemeralenv.io
   resources:
-  - FluxPullRequestGenerators
+  - fluxpullrequestgenerators
   verbs:
   - create
   - delete
@@ -59,13 +59,13 @@ rules:
 - apiGroups:
   - prcontroller.controllers.ephemeralenv.io
   resources:
-  - FluxPullRequestGenerators/finalizers
+  - fluxpullrequestgenerators/finalizers
   verbs:
   - update
 - apiGroups:
   - prcontroller.controllers.ephemeralenv.io
   resources:
-  - FluxPullRequestGenerators/status
+  - fluxpullrequestgenerators/status
   verbs:
   - get
   - patch

@@ -1,7 +1,8 @@
 
 # Image URL to use all building/pushing image targets
 # IMG ?= controller:latest
-IMG=ghcr.io/manisbindra/flux-pull-request-generator:0.2.0
+IMG=ghcr.io/cse-labs/platformops-ephemeral-test-env/flux-pull-request-generator:0.2.0
+
 # ENVTEST_K8S_VERSION refers to the version of kubebuilder assets to be downloaded by envtest binary.
 ENVTEST_K8S_VERSION = 1.24.2
 

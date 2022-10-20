@@ -9,12 +9,12 @@ spec:
   forProvider:
     chart:
       name: helm/app
-      repository: "oci://ghcr.io/manisbindra"
+      repository: "oci://ghcr.io/cse-labs"
       version: 0.0.{{ .Values.prNumber }}
       pullSecretRef:
         name: helmoci
         namespace: crossplane-system
-      url: "oci://ghcr.io/manisbindra/helm/app:0.0.{{ .Values.prNumber }}"
+      url: "oci://ghcr.io/cse-labs/platformops-ephemeral-test-env/helm/app:0.0.{{ .Values.prNumber }}"
     namespace: app
     values:
       prNumber: {{ .Values.prNumber }}
