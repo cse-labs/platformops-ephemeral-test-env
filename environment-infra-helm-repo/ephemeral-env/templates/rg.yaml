@@ -10,6 +10,6 @@ spec:
     location: "East US"
     tags:
       provisioner: crossplane
-      why: forTestingComplex
+      why: ephemeralEnvTest
   providerConfigRef:
     name: azjetpr{{ .Values.prNumber }}
