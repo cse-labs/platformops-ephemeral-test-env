@@ -17,37 +17,14 @@ jobs:
       run: docker login ghcr.io -u ${{ secrets.REGISTRYUSERNAME }} -p ${{ secrets.REGISTRYPASSWORD }}
       
     - name: Build the Docker image
-      run: docker build . --tag ghcr.io/manisbindra/app:${{ github.event.pull_request.head.sha }}
-      
-    - name: Push the Docker image
-      run: docker push ghcr.io/manisbindra/app:${{ github.event.pull_request.head.sha }}
-
-    # - name: Tag docker image
-    #   run: docker tag  ghcr.io/manisbindra/app:pull-${{ github.event.pull_request.head.sha }} ghcr.io/manisbindra/app:${{ github.sha }}
-      
-    # - name: Push new Docker image tag
-    #   run: docker push ghcr.io/manisbindra/app:${{ github.sha }}
-
+      run: docker build -f sample-app-source-repo/Dockerfile ./sample-app-source-repo --tag ghcr.io/cse-labs/platformops-ephemeral-test-env/app:${{ github.event.pull_request.head.sha }}
+     
     - name: install helm
       uses: Azure/setup-helm@v1
 
-    # - name: login to acr using helm
-    #   run: helm registry login ghcr.io --username ${{ secrets.REGISTRYUSERNAME }} --password {{ secrets.REGISTRYPASSWORD }}
-
     - name: create helm package
       run: |
-        helm package --version 0.0.${{ github.event.number }} charts/app
-        
-
-    # - name: helm login for ghcr
-    #   run: |
-    #     export HELM_EXPERIMENTAL_OCI=1
-    #     echo {{ secrets.REGISTRYPASSWORD }} | helm registry login ghcr.io --username ${{ secrets.REGISTRYUSERNAME }} --password-stdin
-
+        helm package --version 0.0.${{ github.event.number }} sample-app-source-repo/charts/app
   
-    - name: push helm to ghcr
-      run: helm push $GITHUB_WORKSPACE/app-0.0.${{ github.event.number }}.tgz oci://ghcr.io/manisbindra/helm
-
-      
-
-    
+    - name: push helm artefact to ghcr
+      run: helm push $GITHUB_WORKSPACE/app-0.0.${{ github.event.number }}.tgz oci://ghcr.io/cse-labs/platformops-ephemeral-test-env/helm

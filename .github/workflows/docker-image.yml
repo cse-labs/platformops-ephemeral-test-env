@@ -17,11 +17,8 @@ jobs:
       run: docker login ghcr.io -u ${{ secrets.REGISTRYUSERNAME }} -p ${{ secrets.REGISTRYPASSWORD }}
       
     - name: Build the Docker image
-      run: docker build -f sample-app-source-repo/Dockerfile ./sample-app-source-repo --tag ghcr.io/manisbindra/app:${{ github.event.pull_request.head.sha }}
-      
-    - name: Push the Docker image
-      run: docker push ghcr.io/manisbindra/app:${{ github.event.pull_request.head.sha }}
-    
+      run: docker build -f sample-app-source-repo/Dockerfile ./sample-app-source-repo --tag ghcr.io/cse-labs/platformops-ephemeral-test-env/app:${{ github.event.pull_request.head.sha }}
+     
     - name: install helm
       uses: Azure/setup-helm@v1
 
@@ -30,8 +27,6 @@ jobs:
         helm package --version 0.0.${{ github.event.number }} sample-app-source-repo/charts/app
   
     - name: push helm artefact to ghcr
-      run: helm push $GITHUB_WORKSPACE/app-0.0.${{ github.event.number }}.tgz oci://ghcr.io/manisbindra/helm
+      run: helm push $GITHUB_WORKSPACE/app-0.0.${{ github.event.number }}.tgz oci://ghcr.io/cse-labs/platformops-ephemeral-test-env/helm
 
-      
-
-    
+  

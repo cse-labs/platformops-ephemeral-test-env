@@ -7,7 +7,7 @@ spec:
   generators:
   - pullRequest:
       github:
-          owner: 
+          owner: cse-labs
           repo: platformops-ephemeral-test-env
       requeueAfterSeconds: 120
   template:

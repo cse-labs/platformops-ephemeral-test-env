@@ -1,12 +1,12 @@
 # Ephemeral app - Infrastructure Repo
 
-This is the Infrastructure repository which contains the manifests / templates to provision the cloud services / resources needed for the ephemeral environment creation, when PR is created against [sample-app-source-repo](https://github.com/cse-labs/platformops-ephemeral-test-env/sample-app-source-repo/)
+This is the Infrastructure repository which contains the manifests / templates to provision the cloud services / resources needed for the ephemeral environment creation, when PR is created against [sample-app-source-repo](https://github.com/cse-labs/platformops-ephemeral-test-env/tree/main/sample-app-source-repo/)
 
 ## Overview
 
 ![Overview](images/infra--repo-overview.png)
 
-Before we look at how the end to solution can work, let us try and understand how the application repo [sample-app-source-repo](https://github.com/cse-labs/platformops-ephemeral-test-env/sample-app-source-repo/), and this Infrastructure Helm Chart Repo work in unision. We will look at a few key events
+Before we look at how the end to solution can work, let us try and understand how the application repo [sample-app-source-repo](https://github.com/cse-labs/platformops-ephemeral-test-env/tree/main/sample-app-source-repo/), and this Infrastructure Helm Chart Repo work in unision. We will look at a few key events
 
 ### Application Repo Pull Request Workflow
 

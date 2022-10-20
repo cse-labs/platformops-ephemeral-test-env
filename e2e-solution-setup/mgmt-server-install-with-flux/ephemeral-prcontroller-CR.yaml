@@ -4,7 +4,7 @@ metadata:
   name: flux-pr-gen-sample
 spec:
   githubPRRepository:
-    user: manisbindra
+    user: cse-labs
     repo: platformops-ephemeral-test-env
     tokenSecretRef: 
       name: tokensecret
