@@ -21,6 +21,7 @@ spec:
       service:
         type: LoadBalancer
       image:
+        repository: ghcr.io/cse-labs/platformops-ephemeral-test-env/app
         tag: {{ .Values.prSHA}}
       db:
         SPRING_DATASOURCE_URL: jdbc:postgresql://pgpr{{ .Values.prNumber }}.postgres.database.azure.com:5432/postgres
