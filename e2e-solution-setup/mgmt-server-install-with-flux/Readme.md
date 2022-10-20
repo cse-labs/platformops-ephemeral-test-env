@@ -91,29 +91,29 @@ Next we validate that the management server installation is successful.
 ### Check that our custom controller and Crossplane controllers are running in the Management Cluster
 
 
-Execute "kubectl get pods -A". This should show Crossplane (Azure Jet Provider and Helm Provider controllers) and our custom controller running in the pr-ephemeral-env-controller-system namespace as shown below
+Execute "kubectl get pods -A". This should show Crossplane (Azure Jet Provider and Helm Provider controllers) and our custom controller running in the flux-pull-request-generator-system namespace as shown below
 
   ```
   $ kubectl get pods -A                                                                                                                            
-NAMESPACE                            NAME                                                              READY   STATUS    RESTARTS   AGE
-crossplane-system                    crossplane-6f6488b745-xt8hj                                       1/1     Running   0          5m19s
-crossplane-system                    crossplane-provider-helm-ab96d6ecc76f-694db899d8-fb9f5            1/1     Running   0          4m15s
-crossplane-system                    crossplane-provider-jet-azure-000558e62129-68cdf6654-h2x89        1/1     Running   0          4m5s
-crossplane-system                    crossplane-rbac-manager-665757f749-lwxqh                          1/1     Running   0          5m19s
-flux-system                          helm-controller-7f4cb5648c-jz8gw                                  1/1     Running   0          3m44s
-flux-system                          kustomize-controller-76fdc7df8b-sf6c5                             1/1     Running   0          3m44s
-flux-system                          notification-controller-75b7fbd7fd-tn4kq                          1/1     Running   0          3m44s
-flux-system                          source-controller-f5c5ff8b8-dx8m8                                 1/1     Running   0          3m44s
-kube-system                          coredns-64897985d-d8vdg                                           1/1     Running   0          5m19s
-kube-system                          coredns-64897985d-t295m                                           1/1     Running   0          5m19s
-kube-system                          etcd-crossplane-mgmt-eph-flux-control-plane                       1/1     Running   0          5m36s
-kube-system                          kindnet-6frsq                                                     1/1     Running   0          5m20s
-kube-system                          kube-apiserver-crossplane-mgmt-eph-flux-control-plane             1/1     Running   0          5m36s
-kube-system                          kube-controller-manager-crossplane-mgmt-eph-flux-control-plane    1/1     Running   0          5m34s
-kube-system                          kube-proxy-lpcr2                                                  1/1     Running   0          5m20s
-kube-system                          kube-scheduler-crossplane-mgmt-eph-flux-control-plane             1/1     Running   0          5m34s
-local-path-storage                   local-path-provisioner-5bb5788f44-gpkhm                           1/1     Running   0          5m19s
-pr-ephemeral-env-controller-system   pr-ephemeral-env-controller-controller-manager-5bb997c9b8-6rln8   2/2     Running   0          2m20s
+  NAMESPACE                            NAME                                                             READY   STATUS    RESTARTS   AGE
+  crossplane-system                    crossplane-6b8b5cbdb4-29nlc                                      1/1     Running   0          4m6s
+  crossplane-system                    crossplane-provider-helm-ab96d6ecc76f-694db899d8-l5klv           1/1     Running   0          3m
+  crossplane-system                    crossplane-provider-jet-azure-000558e62129-68cdf6654-cx9m9       1/1     Running   0          2m58s
+  crossplane-system                    crossplane-rbac-manager-fb54f8f-rtb4h                            1/1     Running   0          4m6s
+  flux-pull-request-generator-system   flux-pull-request-generator-controller-manager-bfc8498ff-q624q   2/2     Running   0          80s
+  flux-system                          helm-controller-7f4cb5648c-vslt2                                 1/1     Running   0          2m30s
+  flux-system                          kustomize-controller-76fdc7df8b-vxcsx                            1/1     Running   0          2m30s
+  flux-system                          notification-controller-75b7fbd7fd-7xcm6                         1/1     Running   0          2m30s
+  flux-system                          source-controller-f5c5ff8b8-ctsq2                                1/1     Running   0          2m30s
+  kube-system                          coredns-64897985d-prbq6                                          1/1     Running   0          4m6s
+  kube-system                          coredns-64897985d-zvc5z                                          1/1     Running   0          4m6s
+  kube-system                          etcd-crossplane-mgmt-eph-flux-control-plane                      1/1     Running   0          4m21s
+  kube-system                          kindnet-qxzxc                                                    1/1     Running   0          4m6s
+  kube-system                          kube-apiserver-crossplane-mgmt-eph-flux-control-plane            1/1     Running   0          4m21s
+  kube-system                          kube-controller-manager-crossplane-mgmt-eph-flux-control-plane   1/1     Running   0          4m19s
+  kube-system                          kube-proxy-7mk5r                                                 1/1     Running   0          4m6s
+  kube-system                          kube-scheduler-crossplane-mgmt-eph-flux-control-plane            1/1     Running   0          4m21s
+  local-path-storage                   local-path-provisioner-5bb5788f44-lfxm6                          1/1     Running   0          4m6s
   ```
 
 #### Verify that the infra repository has been added as a flux source 
@@ -123,8 +123,9 @@ pr-ephemeral-env-controller-system   pr-ephemeral-env-controller-controller-mana
   ```
   $ flux get sources git                                                                                                      
   NAME                    REVISION        SUSPENDED       READY   MESSAGE                                                                      
-  flux-system             main/9d6b48f    False           True    stored artifact for revision 'main/9d6b48f7f5456b067c0860788b8fb2021ba28c40'
-  infra-repo-public       main/9c76e72    False           True    stored artifact for revision 'main/9c76e72de74197f21798c2e6f01b3e8488ef5435'
+  NAME             	REVISION    	SUSPENDED	READY	MESSAGE                                                                      
+  flux-system      	main/9d6b48f	False    	True 	stored artifact for revision 'main/9d6b48f7f5456b067c0860788b8fb2021ba28c40'	
+  infra-repo-public	main/7ec7ae0	False    	True 	stored artifact for revision 'main/7ec7ae082bf6a229e095f8fb78c961ba8fa70f8a'
   ```
 
 * Verify the custom resource FluxPullRequestGenerator has been created and is in the ready state
@@ -186,7 +187,7 @@ pr-ephemeral-env-controller-system   pr-ephemeral-env-controller-controller-mana
   The helm release creates the different crossplane azure provider and crossplane helm provider resources. All resources have
   the PR Number 22 Appended to their names. Let us drill down and look at the definition of the **apphelmpr22** resource, which is used to release the application on to the ephemeral environment
   
-  ```
+  ```yaml
   apiVersion: helm.crossplane.io/v1beta1
   kind: Release
   metadata:
@@ -198,8 +199,8 @@ pr-ephemeral-env-controller-system   pr-ephemeral-env-controller-controller-mana
         pullSecretRef:
           name: helmoci
           namespace: crossplane-system
-        repository: oci://ghcr.io/manisbindra
-        url: oci://ghcr.io/manisbindra/helm/app:0.0.22
+        repository: oci://ghcr.io/cse-labs
+        url: oci://ghcr.io/cse-labs/platformops-ephemeral-test-env/helm/app:0.0.22
         version: 0.0.22
       namespace: app
       set:
@@ -214,7 +215,8 @@ pr-ephemeral-env-controller-system   pr-ephemeral-env-controller-controller-mana
           SPRING_DATASOURCE_URL: jdbc:postgresql://pgpr22.postgres.database.azure.com:5432/postgres
           SPRING_DATASOURCE_USERNAME: psqladminun@pgpr22
         image:
-          tag: pull-dfb5e1d2499849aff2b846fe9e7bea2919a05cdf
+          repository: ghcr.io/cse-labs/platformops-ephemeral-test-env/app
+          tag: dfb5e1d2499849aff2b846fe9e7bea2919a05cdf
         prNumber: 22
         service:
           type: LoadBalancer

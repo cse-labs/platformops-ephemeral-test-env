@@ -478,7 +478,7 @@ spec:
         - --leader-elect
         command:
         - /manager
-        image: ghcr.io/manisbindra/flux-pull-request-generator:0.2.0
+        image: ghcr.io/cse-labs/platformops-ephemeral-test-env/flux-pull-request-generator:0.2.0
         livenessProbe:
           httpGet:
             path: /healthz

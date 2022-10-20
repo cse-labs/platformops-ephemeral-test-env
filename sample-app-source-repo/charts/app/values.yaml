@@ -7,10 +7,10 @@ replicaCount: 1
 prNumber: 4848
 
 image:
-  repository: ghcr.io/manisbindra/app
+  repository: ghcr.io/cse-labs/platformops-ephemeral-test-env/app
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "pull-tst"
+  tag: "tst"
 
 db:
   SPRING_DATASOURCE_URL: jdbc:postgresql://pgdb.postgres.database.azure.com:5432/postgres

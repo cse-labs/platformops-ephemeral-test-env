@@ -122,8 +122,7 @@ Execute "kubectl get pods -A". This should show Crossplane (Azure Jet Provider a
   ```
   $ argocd repo list                                                                                                      
   TYPE  NAME  REPO                                                         INSECURE  OCI    LFS    CREDS  STATUS      MESSAGE  PROJECT
-  git         https://github.com/maniSbindra/ephemeral-env-infra.git  false     false  false  true   Successful           
-  git         https://github.com/maniSbindra/ephemeral-app.git        false     false  false  true   Successful
+  git         https://github.com/cse-labs/platformops-ephemeral-test-env.git  false     false  false  true   Successful           
   ```
 
   We are all set now let us see the ephemeral environments in action.
@@ -163,8 +162,8 @@ Execute "kubectl get pods -A". This should show Crossplane (Azure Jet Provider a
         pullSecretRef:
           name: helmoci
           namespace: crossplane-system
-        repository: 'oci://ghcr.io/manisbindra'
-        url: 'oci://ghcr.io/manisbindra/helm/app:0.0.21'
+        repository: 'oci://ghcr.io/cse-labs'
+        url: 'oci://ghcr.io/cse-labs/platformops-ephemeral-test-env/helm/app:0.0.21'
         version: 0.0.21
       namespace: app
       set:
@@ -179,7 +178,8 @@ Execute "kubectl get pods -A". This should show Crossplane (Azure Jet Provider a
           SPRING_DATASOURCE_URL: 'jdbc:postgresql://pgpr21.postgres.database.azure.com:5432/postgres'
           SPRING_DATASOURCE_USERNAME: psqladminun@pgpr21
         image:
-          tag: pull-87ef8f264a79668fd4a4e68ac03d2d908ce61b57
+          tag: 87ef8f264a79668fd4a4e68ac03d2d908ce61b57
+          repository: ghcr.io/cse-labs/platformops-ephemeral-test-env/app
         service:
           type: LoadBalancer
     providerConfigRef:

@@ -13,22 +13,22 @@ The configuration of this controller is based on configuration of a Github [Pull
 
 Sample FluxPullRequestGenerator Resource (from the [file](./docs/sample-pr-eph-env-controller-with-healthcheck.yaml) )
 
-  ```
+``` yaml
 apiVersion: prcontroller.controllers.ephemeralenv.io/v1alpha1
 kind: FluxPullRequestGenerator
 metadata:
   name: flux-pr-gen-sample
 spec:
   githubPRRepository:
-    user: manisbindra
-    repo: ephemeral-app
+    user: cse-labs
+    repo: platformops-ephemeral-test-env
     tokenSecretRef: 
       name: tokensecret
       namespace: default
       key: token
   envCreationHelmRepo:
     fluxSourceRepoName: infra-repo-public
-    helmChartPath: ephemeral-env
+    helmChartPath: environment-infra-helm-repo/ephemeral-env
     chartVersion: 0.1.0
     destinationNamespace: pr-helm-releases
   interval: "60s"
@@ -43,7 +43,7 @@ spec:
   * fluxSourceRepoName: This is the Flux Source repository name, which points to Helm Chart repository. This Flux Source needs to exist to enable provisioning of ephemeral environment for the PR. For the example shown above, the "infra-repo-public" was created as follows:
     
     ```
-      export GITHUB_INFRA_REPOSITORY="https://github.com/maniSbindra/ephemeral-env-infra"
+      export GITHUB_INFRA_REPOSITORY="https://github.com/cse-labs/platformops-ephemeral-test-env"
       flux create source git infra-repo-public \
         --url ${GITHUB_INFRA_REPOSITORY} \
         --branch "main" \
@@ -67,7 +67,7 @@ For each FluxPullRequestGenerator resource created in the cluster, the controlle
 
 ## Creating isolated ephemreal environmens with isolated Kubernetes (AKS) cluster, and isolated Postgres Database (Azure Postgres), and the Application with PR changes deployed to that cluster
 
-The [Sample FluxPullRequestGenerator Configuration](#controller-configuration) on this page creates a new Ephmeral environment for each PR to the [sample application repository](https://github.com/maniSbindra/ephemeral-app). This is a simple todo API (CRUD for todo items), the tech stack is Java / Springboot, and the application needs a backend postgres database. In this case for each PR several resources are created, including a new resource group, a new AKS cluster on which the application deployement and service (corresponding to the PR SHA commit of the application) are created, a new Azure Postgres backend database to which the application points to read and persist data. To try this out you can bootstrap your Kubernetes cluster using these [steps](https://github.com/cse-labs/platformops-ephemeral-test-env/tree/main/e2e-solution-setup/tree/main/mgmt-server-install-with-flux)   
+The [Sample FluxPullRequestGenerator Configuration](#controller-configuration) on this page creates a new Ephmeral environment for each PR to the [sample application repository](https://github.com/cse-labs/platformops-ephemeral-test-env/tree/main/sample-app-source-repo). This is a simple todo API (CRUD for todo items), the tech stack is Java / Springboot, and the application needs a backend postgres database. In this case for each PR several resources are created, including a new resource group, a new AKS cluster on which the application deployement and service (corresponding to the PR SHA commit of the application) are created, a new Azure Postgres backend database to which the application points to read and persist data. To try this out you can bootstrap your Kubernetes cluster using these [steps](https://github.com/cse-labs/platformops-ephemeral-test-env/tree/main/e2e-solution-setup/tree/main/mgmt-server-install-with-flux)   
 
 ## Installation 
 For Installation instructions check [Installation](docs/Installation.md)
@@ -94,7 +94,7 @@ Once the controller has been installed on the cluster, and the FluxPullRequestGe
     No resources found
   ```
   
-* Let us now create a PR against the application Repo (https://github.com/maniSbindra/ephemeral-app.git). Once a PR has been created, we should see a new event in the prcontroller.
+* Let us now create a PR against the [application Repo](https://github.com/cse-labs/platformops-ephemeral-test-env/tree/main/sample-app-source-repo). Once a PR has been created, we should see a new event in the prcontroller.
   Once a PR is created on Github
   In this case our PR has PR number: 22 and commit SHA short hash: dfb5e1d. After the PR creation we see the following events taking place
    
