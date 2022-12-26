@@ -63,6 +63,8 @@ echo "Setting up Argocd"
 kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
+kubectl create secret generic github-pat -n argocd --from-literal=pat=$GITHUB_TOKEN
+
 # wait for argocd to be ready
 echo "Waiting for argocd to be ready"
 sleep 120
@@ -70,6 +72,10 @@ sleep 120
 # login into argocd
 echo "Logging into argocd"
 kubectl port-forward svc/argocd-server -n argocd 8080:443 &
+K8s_PORT_FORWARD_PID=$!
+
+echo "Process ID of port forward task: ${K8s_PORT_FORWARD_PID}"
+
 ARGOCD_ADMIN_PASS=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo)
 argocd login localhost:8080 --username admin --password $ARGOCD_ADMIN_PASS --insecure
 
@@ -79,6 +85,7 @@ echo "Adding app and infra repos to argocd Repositories"
 argocd repo add $GITHUB_APP_REPOSITORY --username $GITHUB_USER --password $GITHUB_TOKEN
 argocd repo add $GITHUB_INFRA_REPOSITORY --username $GITHUB_USER --password $GITHUB_TOKEN
 
+kill -9 ${K8s_PORT_FORWARD_PID}
 
 # Apply application set with pull request builder
 echo "Applying application set with pull request builder"
