@@ -9,6 +9,9 @@ spec:
       github:
           owner: cse-labs
           repo: platformops-ephemeral-test-env
+          tokenRef:
+            secretName: github-pat
+            key: pat
       requeueAfterSeconds: 120
   template:
     metadata:
